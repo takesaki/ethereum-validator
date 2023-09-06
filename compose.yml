@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  validator:
+    image: gcr.io/prysmaticlabs/prysm/validator:${TAG:?Set container tag.}
+    #container_name: validator-node
+    command: >
+      --${NETWORK:?Set environment for target network.}
+      --beacon-rpc-provider=${BEACON_RPC:?Set environment for beacon rpc provider.}
+      --config-file=/config/validator.yaml 
+    ports:
+      - "8081:8081" # for metrics, change port.
+    env_file:
+      - .validator.env
+    restart: 'no'
+    volumes:
+      # Data persistency
+      - ./data:/data
+      - ./wallet:/wallet
+      - ./conf.d:/config:ro
+    secrets:
+      - wallet-password
+
+secrets:
+  wallet-password:
+    file: ./wallet-password.txt
+
+ 
