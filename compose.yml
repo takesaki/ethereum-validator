@@ -19,6 +19,12 @@ services:
       - ./conf.d:/config:ro
     secrets:
       - wallet-password
+    # logging:
+    #   driver: awslogs
+    #   options:
+    #     awslogs-region: ap-northeast-3
+    #     awslogs-group: eth-stake01
+    #     tag: "{{.Name}}/{{.ID}}"
 
 secrets:
   wallet-password:
